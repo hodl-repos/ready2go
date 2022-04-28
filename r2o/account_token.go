@@ -23,7 +23,7 @@ func GetAccountAccessToken(developerToken string) error {
 	}
 
 	request := requestDto{
-		AuthorizationCallbackUri: "https://example.com?auth=succeess",
+		AuthorizationCallbackUri: "https://mauracher.cc/r2o",
 	}
 
 	json_data, err := json.Marshal(&request)

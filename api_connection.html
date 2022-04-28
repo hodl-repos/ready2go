@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ready2Order Connection</title>
+
+    <style>
+        table,
+        td,
+        th {
+            padding: 0.5rem;
+            border: 1px solid;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+    </style>
+
+</head>
+
+<body id="body">
+    <table style="border: 1px;">
+        <tbody>
+            <tr>
+                <td>Account Token</td>
+                <td id="accountTokenField"></td>
+                <td>
+                    <button onclick="c()">Copy</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Grant Access Token</td>
+                <td id="grantAccessTokenField"></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td id="statusField"></td>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        let params = (new URL(document.location)).searchParams;
+        const accountToken = params.get("accountToken");
+        const grantAccessToken = params.get("grantAccessToken");
+        const status = params.get("status");
+
+        const accountTokenField = document.getElementById("accountTokenField");
+        if (accountToken.length > 0) {
+            accountTokenField.appendChild(document.createTextNode(accountToken));
+        } else {
+            accountTokenField.appendChild(document.createTextNode('-'));
+        }
+
+        const grantAccessTokenField = document.getElementById("grantAccessTokenField");
+        if (grantAccessToken.length > 0) {
+            grantAccessTokenField.appendChild(document.createTextNode(grantAccessToken));
+        } else {
+            grantAccessTokenField.appendChild(document.createTextNode('-'));
+        }
+
+        const statusField = document.getElementById("statusField");
+        if (status.length > 0) {
+            statusField.appendChild(document.createTextNode(status));
+        } else {
+            statusField.appendChild(document.createTextNode('-'));
+        }
+
+        function c() {
+            if (accountToken.length > 0) {
+                navigator.clipboard.writeText(accountToken).then();
+            }
+        }
+    </script>
+</body>
+
+</html>
