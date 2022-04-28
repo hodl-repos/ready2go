@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Successfully connected</title>
+</head>
+<body id="body">
+    <script>
+        let params = (new URL(document.location)).searchParams;
+        const accountToken = params.get("accountToken");
+        const body = document.getElementById("body");
+
+        let el = document.createElement("p");
+        console.log(params.get("accountToken"));
+        let text = document.createTextNode(accountToken);
+        el.appendChild(text);
+
+        body.appendChild(el);
+        // ?your-extra-param=123&accountToken=__ACCOUNT_TOKEN__&grantAccessToken=__GRANT_ACCESS_TOKEN__&status=approved
+    </script>
+</body>
+</html>
