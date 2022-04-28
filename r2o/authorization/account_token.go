@@ -1,14 +1,19 @@
-package r2o
+package authorization
 
 import (
-	"bytes"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+
+	"github.com/hodl-repos/ready2go/helper"
 )
 
-func GetAccountAccessToken(developerToken string) error {
+const (
+	_BASE_API_URL_V1 = "https://api.ready2order.com/v1"
+)
+
+//returns the uri for the creation of a account-token
+func GetAccountAccessToken(developerToken string) (*string, error) {
 	type requestDto struct {
 		AuthorizationCallbackUri string `json:"authorizationCallbackUri"`
 	}
@@ -26,19 +31,19 @@ func GetAccountAccessToken(developerToken string) error {
 		AuthorizationCallbackUri: "https://mauracher.cc/r2o",
 	}
 
-	json_data, err := json.Marshal(&request)
+	requestBody, err := helper.JsonToIoReader(&request)
 
 	if err != nil {
 		fmt.Errorf("GetAccountAccessToken: cannot serialize request-dto")
-		return err
+		return nil, err
 	}
 
 	// Create a new request using http
-	req, err := http.NewRequest("POST", _BASE_API_URL_V1+"/developerToken/grantAccessToken", bytes.NewBuffer(json_data))
+	req, err := http.NewRequest("POST", _BASE_API_URL_V1+"/developerToken/grantAccessToken", requestBody)
 
 	if err != nil {
 		fmt.Errorf("GetAccountAccessToken: cannot create http request")
-		return err
+		return nil, err
 	}
 
 	// add authorization header to the req
@@ -47,28 +52,23 @@ func GetAccountAccessToken(developerToken string) error {
 
 	// Send req using http Client
 	client := &http.Client{}
-	resp, err := client.Do(req)
+	httpResp, err := client.Do(req)
 
 	if err != nil {
 		fmt.Errorf("GetAccountAccessToken: cannot send http request")
-		return err
+		return nil, err
 	}
 
-	if resp.StatusCode != http.StatusOK {
+	if httpResp.StatusCode != http.StatusOK {
 		fmt.Errorf("GetAccountAccessToken: http status wrong")
-		return errors.New("GetAccountAccessToken: wront status @ get request: " + resp.Status)
+		return nil, errors.New("GetAccountAccessToken: wront status @ get request: " + httpResp.Status)
 	}
 
-	defer resp.Body.Close()
+	defer httpResp.Body.Close()
 
 	response := responseDto{}
 
-	d := json.NewDecoder(resp.Body)
-	d.DisallowUnknownFields()
+	helper.DecodeHttpResponse(httpResp, &response)
 
-	if err := d.Decode(&response); err != nil {
-		return err
-	}
-
-	return nil
+	return response.GrantAccessUri, nil
 }

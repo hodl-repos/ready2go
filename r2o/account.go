@@ -1,5 +1,11 @@
 package r2o
 
+// AccountService handles communication with the issue related
+// methods of the ready2order API.
+//
+// ready2order API docs: ...docs...
+type AccountService service
+
 type Account struct {
 	CompanyID                  *int    `json:"company_id"`
 	CompanyBranch              *int    `json:"company_branch"`
@@ -26,9 +32,3 @@ type Account struct {
 	CountryID                  *string `json:"country_id"`
 	CompanyPartnerData         *string `json:"company_partnerData"`
 }
-
-// AccountService handles communication with the issue related
-// methods of the ready2order API.
-//
-// ready2order API docs: ...docs...
-type AccountService service
