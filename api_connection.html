@@ -52,28 +52,28 @@
         const status = params.get("status");
 
         const accountTokenField = document.getElementById("accountTokenField");
-        if (accountToken.length > 0) {
+        if (accountToken) {
             accountTokenField.appendChild(document.createTextNode(accountToken));
         } else {
             accountTokenField.appendChild(document.createTextNode('-'));
         }
 
         const grantAccessTokenField = document.getElementById("grantAccessTokenField");
-        if (grantAccessToken.length > 0) {
+        if (grantAccessToken) {
             grantAccessTokenField.appendChild(document.createTextNode(grantAccessToken));
         } else {
             grantAccessTokenField.appendChild(document.createTextNode('-'));
         }
 
         const statusField = document.getElementById("statusField");
-        if (status.length > 0) {
+        if (status) {
             statusField.appendChild(document.createTextNode(status));
         } else {
             statusField.appendChild(document.createTextNode('-'));
         }
 
         function c() {
-            if (accountToken.length > 0) {
+            if (accountToken) {
                 navigator.clipboard.writeText(accountToken).then();
             }
         }
