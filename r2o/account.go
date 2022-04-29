@@ -3,6 +3,8 @@ package r2o
 import (
 	"context"
 	"net/http"
+
+	"github.com/hodl-repos/ready2go/helper"
 )
 
 // AccountService handles communication with the issue related
@@ -39,31 +41,31 @@ type AccountResponse struct {
 }
 
 type AccountRequest struct {
-	CompanyBusinessCity                       *string `json:"company_businessCity"`
-	CompanyBusinessCountry                    *int64  `json:"company_businessCountry"`
-	CompanyBusinessDateOfBirth                *string `json:"company_businessDateOfBirth"`
-	CompanyBusinessPhoneNumber                *string `json:"company_businessPhoneNumber"`
-	CompanyBusinessRegistrationNumber         *string `json:"company_businessRegistrationNumber"`
-	CompanyBusinessStreet                     *string `json:"company_businessStreet"`
-	CompanyBusinessZip                        *string `json:"company_businessZip"`
-	CompanyCity                               *string `json:"company_city"`
-	CompanyDisableVatReason                   *int64  `json:"company_disableVatReason"`
-	CompanyEmail                              *string `json:"company_email"`
-	CompanyGlobalLocationNumber               *string `json:"company_globalLocationNumber"`
-	CompanyLegalForm                          *int64  `json:"company_legalForm"`
-	CompanyName                               *string `json:"company_name"`
-	CompanyPartnerData                        *string `json:"company_partnerData"`
-	CompanyPhone                              *string `json:"company_phone"`
-	CompanyRequireBillingMethodBeforeLiveMode *bool   `json:"company_requireBillingMethodBeforeLiveMode"`
-	CompanyStreet                             *string `json:"company_street"`
-	CompanyTaxIdentificationNumber            *string `json:"company_taxIdentificationNumber"`
-	CompanyTaxOffice                          *int64  `json:"company_taxOffice"`
-	CompanyUsername                           *string `json:"company_username"`
-	CompanyWebsite                            *string `json:"company_website"`
-	CompanyZip                                *string `json:"company_zip"`
-	CurrencyID                                *int64  `json:"currency_id"`
-	LanguageID                                *int64  `json:"language_id"`
-	SyncToSalesforce                          *bool   `json:"syncToSalesforce"`
+	CompanyBusinessCity                       *string `json:"company_businessCity" validate:"required"`
+	CompanyBusinessCountry                    *int64  `json:"company_businessCountry" validate:"required"`
+	CompanyBusinessDateOfBirth                *string `json:"company_businessDateOfBirth" validate:"required"`
+	CompanyBusinessPhoneNumber                *string `json:"company_businessPhoneNumber" validate:"required"`
+	CompanyBusinessRegistrationNumber         *string `json:"company_businessRegistrationNumber" validate:"required"`
+	CompanyBusinessStreet                     *string `json:"company_businessStreet" validate:"required"`
+	CompanyBusinessZip                        *string `json:"company_businessZip" validate:"required"`
+	CompanyCity                               *string `json:"company_city" validate:"required"`
+	CompanyDisableVatReason                   *int64  `json:"company_disableVatReason" validate:"required"`
+	CompanyEmail                              *string `json:"company_email" validate:"required"`
+	CompanyGlobalLocationNumber               *string `json:"company_globalLocationNumber" validate:"required"`
+	CompanyLegalForm                          *int64  `json:"company_legalForm" validate:"required"`
+	CompanyName                               *string `json:"company_name" validate:"required"`
+	CompanyPartnerData                        *string `json:"company_partnerData" validate:"required"`
+	CompanyPhone                              *string `json:"company_phone" validate:"required"`
+	CompanyRequireBillingMethodBeforeLiveMode *bool   `json:"company_requireBillingMethodBeforeLiveMode" validate:"required"`
+	CompanyStreet                             *string `json:"company_street" validate:"required"`
+	CompanyTaxIdentificationNumber            *string `json:"company_taxIdentificationNumber" validate:"required"`
+	CompanyTaxOffice                          *int64  `json:"company_taxOffice" validate:"required"`
+	CompanyUsername                           *string `json:"company_username" validate:"required"`
+	CompanyWebsite                            *string `json:"company_website" validate:"required"`
+	CompanyZip                                *string `json:"company_zip" validate:"required"`
+	CurrencyID                                *int64  `json:"currency_id" validate:"required"`
+	LanguageID                                *int64  `json:"language_id" validate:"required"`
+	SyncToSalesforce                          *bool   `json:"syncToSalesforce" validate:"required"`
 }
 
 func (as *AccountService) GetAccountInfo(ctx context.Context) (*AccountResponse, error) {
@@ -79,9 +81,15 @@ func (as *AccountService) GetAccountInfo(ctx context.Context) (*AccountResponse,
 }
 
 func (as *AccountService) UpdateAccountInfo(ctx context.Context, account *AccountRequest) (*AccountResponse, error) {
+	err := helper.ValidateStruct(account)
+
+	if err != nil {
+		return nil, err
+	}
+
 	responseData := AccountResponse{}
 
-	err := as.client.runHttpRequestWithContext(ctx, "company", http.MethodPost, account, &responseData)
+	err = as.client.runHttpRequestWithContext(ctx, "company", http.MethodPost, account, &responseData)
 
 	if err != nil {
 		return nil, err

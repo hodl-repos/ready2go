@@ -7,13 +7,23 @@ import (
 	"github.com/go-playground/validator"
 )
 
-type ValidationError map[string][]string
+type ValidationError struct {
+	InnerError ValidationErrorData
 
-func ValidateStruct(data interface{}) *ValidationError {
+	Err error
+}
+
+func (r *ValidationError) Error() string {
+	return r.Err.Error()
+}
+
+type ValidationErrorData map[string][]string
+
+func ValidateStruct(data interface{}) error {
 	err := validator.New().Struct(data)
 
 	if err != nil {
-		valErr := ValidationError{}
+		valErr := ValidationErrorData{}
 
 		//combine all errors
 		for _, err := range err.(validator.ValidationErrors) {
@@ -31,7 +41,10 @@ func ValidateStruct(data interface{}) *ValidationError {
 			valErr[field] = append(valErr[field], msg)
 		}
 
-		return &valErr
+		return &ValidationError{
+			InnerError: valErr,
+			Err:        fmt.Errorf("validation faild %w", err),
+		}
 	}
 
 	return nil

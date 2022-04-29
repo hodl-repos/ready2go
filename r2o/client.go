@@ -27,7 +27,8 @@ type Client struct {
 	common service // Reuse a single struct instead of allocating one for each service on the heap.
 
 	// Services used for talking to different parts of the Ready2Order API.
-	Account *AccountService
+	Account                 *AccountService
+	AccountingFinancialYear *AccountingFinancialYearService
 }
 
 // NewClient returns a new Ready2Order API client. If a nil httpClient is
@@ -42,6 +43,7 @@ func NewClient(accountApiToken *string, httpClient *http.Client) *Client {
 	c.common.client = c
 
 	c.Account = (*AccountService)(&c.common)
+	c.AccountingFinancialYear = (*AccountingFinancialYearService)(&c.common)
 
 	return c
 }
