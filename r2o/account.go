@@ -1,9 +1,14 @@
 package r2o
 
+import (
+	"context"
+	"net/http"
+)
+
 // AccountService handles communication with the issue related
 // methods of the ready2order API.
 //
-// ready2order API docs: ...docs...
+// ready2order API docs: https://app.swaggerhub.com/apis-docs/ready2ordergmbh/ready2order-api-production/1.0.329#/
 type AccountService service
 
 type Account struct {
@@ -31,4 +36,20 @@ type Account struct {
 	CurrencyID                 *int    `json:"currency_id"`
 	CountryID                  *string `json:"country_id"`
 	CompanyPartnerData         *string `json:"company_partnerData"`
+}
+
+func (as *AccountService) GetAccountInfo(ctx context.Context) (*Account, error) {
+	responseData := Account{}
+
+	err := as.client.runHttpRequestWithContext(ctx, "company", http.MethodGet, nil, &responseData)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &responseData, nil
+}
+
+func (as *AccountService) UpdateAccountInfo(ctx context.Context, account *Account) error {
+	return as.client.runHttpRequestWithContext(ctx, "company", http.MethodPost, account, nil)
 }

@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	_BASE_API_URL_V1 = "https://api.ready2order.com/v1"
+	_BASE_API_URL_V1 = "https://api.ready2order.com/v1/"
 )
 
 type service struct {
