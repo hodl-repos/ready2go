@@ -87,10 +87,9 @@ func (c *Client) runHttpRequestWithContext(ctx context.Context, path, method str
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK && resp.StatusCode != http.StatusNoContent && resp.StatusCode != http.StatusCreated {
-		rateLimitError := helper.TryParseRateLimitExceeded(&resp.Body)
-
-		if rateLimitError != nil {
-			return fmt.Errorf("HTTP Request denied, ratelimit exceeded")
+		//try parsing the error -> is not nil if the error can be parsed
+		if rateLimitError := helper.ParseRateLimitExceededError(&resp.Body); rateLimitError != nil {
+			return rateLimitError
 		}
 
 		// TODO: https://developers.google.com/drive/api/guides/handle-errors

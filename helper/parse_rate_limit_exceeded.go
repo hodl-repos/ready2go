@@ -2,8 +2,19 @@ package helper
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 )
+
+type RateLimitExceededError struct {
+	InnerError RateLimitExceeded
+
+	Err error
+}
+
+func (r *RateLimitExceededError) Error() string {
+	return r.Err.Error()
+}
 
 type RateLimitExceeded struct {
 	Code    *string `json:"code" validate:"required"`
@@ -17,7 +28,7 @@ type RateLimitExceeded struct {
 	RequestID *string `json:"requestId" validate:"required"`
 }
 
-func TryParseRateLimitExceeded(responseBody *io.ReadCloser) *RateLimitExceeded {
+func ParseRateLimitExceededError(responseBody *io.ReadCloser) error {
 	data := RateLimitExceeded{}
 
 	d := json.NewDecoder(*responseBody)
@@ -31,5 +42,8 @@ func TryParseRateLimitExceeded(responseBody *io.ReadCloser) *RateLimitExceeded {
 		return nil
 	}
 
-	return &data
+	return &RateLimitExceededError{
+		InnerError: data,
+		Err:        errors.New("RateLimit for AccountToken exceeded"),
+	}
 }
