@@ -24,6 +24,8 @@ func Execute() {
 	rootCmd.AddCommand(versionCmd)
 	rootCmd.AddCommand(accountCmd)
 	rootCmd.AddCommand(authorizeCmd)
+	rootCmd.AddCommand(webhookCmd)
+	webhookCmd.AddCommand(webhookEventsCmd)
 
 	err := rootCmd.Execute()
 	if err != nil {

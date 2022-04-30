@@ -29,6 +29,7 @@ type Client struct {
 	// Services used for talking to different parts of the Ready2Order API.
 	Account                 *AccountService
 	AccountingFinancialYear *AccountingFinancialYearService
+	Webhook                 *WebhookService
 }
 
 // NewClient returns a new Ready2Order API client. If a nil httpClient is
@@ -44,6 +45,7 @@ func NewClient(accountApiToken *string, httpClient *http.Client) *Client {
 
 	c.Account = (*AccountService)(&c.common)
 	c.AccountingFinancialYear = (*AccountingFinancialYearService)(&c.common)
+	c.Webhook = (*WebhookService)(&c.common)
 
 	return c
 }
