@@ -27,3 +27,7 @@ func SetAccountToken(t string) {
 		c.AccountToken = t
 	}
 }
+
+func AccountToken() string {
+	return c.AccountToken
+}

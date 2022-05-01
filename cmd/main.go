@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/hodl-repos/ready2go/internal/cli/authorize"
+	"github.com/hodl-repos/ready2go/internal/cli/interactive"
 	"github.com/urfave/cli/v2"
 )
 
@@ -19,6 +20,7 @@ func main() {
 	// root commands
 	app.Commands = []*cli.Command{
 		authorize.Command,
+		interactive.Command,
 	}
 
 	err := app.Run(os.Args)
