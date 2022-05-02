@@ -7,7 +7,8 @@ import (
 )
 
 var menus = map[string]func(c *cli.Context) error{
-	"webhook": webhookMenu,
+	"webhook":  webhookMenu,
+	"billType": billTypeMenu,
 }
 
 func menuSelectAndRun(title string, c *cli.Context, menu map[string]func(c *cli.Context) error) error {

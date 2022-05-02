@@ -1,6 +1,8 @@
 package interactive
 
 import (
+	"fmt"
+
 	"github.com/hodl-repos/ready2go/internal/cli/config"
 	"github.com/urfave/cli/v2"
 )
@@ -25,5 +27,7 @@ func authorizeAndRun(c *cli.Context) error {
 		if err != nil {
 			return err
 		}
+
+		fmt.Println("--- starting over with same account token")
 	}
 }
