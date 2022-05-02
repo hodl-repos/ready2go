@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// BillService handles communication with the issue related
+// CountryService handles communication with the issue related
 // methods of the ready2order API.
 //
 // ready2order API docs: https://app.swaggerhub.com/apis-docs/ready2ordergmbh/ready2order-api-production/1.0.329#/

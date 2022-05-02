@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/google/go-querystring/query"
 	"github.com/hodl-repos/ready2go/helper"
 )
 
@@ -33,6 +34,7 @@ type Client struct {
 	Bill                    *BillService
 	BillType                *BillTypeService
 	Country                 *CountryService
+	Coupon                  *CouponService
 }
 
 // NewClient returns a new Ready2Order API client. If a nil httpClient is
@@ -52,6 +54,7 @@ func NewClient(accountApiToken *string, httpClient *http.Client) *Client {
 	c.Bill = (*BillService)(&c.common)
 	c.BillType = (*BillTypeService)(&c.common)
 	c.Country = (*CountryService)(&c.common)
+	c.Coupon = (*CouponService)(&c.common)
 
 	return c
 }
@@ -61,6 +64,10 @@ func (c *Client) runHttpRequest(path, method string, requestData interface{}, re
 }
 
 func (c *Client) runHttpRequestWithContext(ctx context.Context, path, method string, requestData interface{}, responseData interface{}) error {
+	return c.runHttpRequestWithParamsWithContext(ctx, path, method, nil, requestData, responseData)
+}
+
+func (c *Client) runHttpRequestWithParamsWithContext(ctx context.Context, path, method string, params, requestData, responseData interface{}) error {
 	//URL BUILDING
 	apiUrl, err := helper.BuildApiUrl(c.baseURL, &path)
 	if err != nil {
@@ -86,6 +93,20 @@ func (c *Client) runHttpRequestWithContext(ctx context.Context, path, method str
 	//ADD CONTENT-TYPE IF CONTENT IS PRESENT
 	if requestBody != nil {
 		req.Header.Add("Content-Type", "application/json")
+	}
+
+	if params != nil {
+		v, _ := query.Values(params)
+
+		q := req.URL.Query()
+
+		for key, values := range v {
+			for _, value := range values {
+				q.Add(key, value)
+			}
+		}
+
+		req.URL.RawQuery = q.Encode()
 	}
 
 	//SEND REQUEST TO API
