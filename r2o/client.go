@@ -37,6 +37,7 @@ type Client struct {
 	Coupon                  *CouponService
 	CouponCategory          *CouponCategoryService
 	Currency                *CurrencyService
+	Customer                *CustomerService
 }
 
 // NewClient returns a new Ready2Order API client. If a nil httpClient is
@@ -59,6 +60,7 @@ func NewClient(accountApiToken *string, httpClient *http.Client) *Client {
 	c.Coupon = (*CouponService)(&c.common)
 	c.CouponCategory = (*CouponCategoryService)(&c.common)
 	c.Currency = (*CurrencyService)(&c.common)
+	c.Customer = (*CustomerService)(&c.common)
 
 	return c
 }

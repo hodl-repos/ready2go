@@ -13,6 +13,7 @@ var menus = map[string]func(c *cli.Context) error{
 	"coupon":         couponMenu,
 	"couponCategory": couponCategoryMenu,
 	"currency":       currencyMenu,
+	"customer":       customerMenu,
 }
 
 func menuSelectAndRun(title string, c *cli.Context, menu map[string]func(c *cli.Context) error) error {
