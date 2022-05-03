@@ -18,6 +18,7 @@ var menus = map[string]func(c *cli.Context) error{
 	"discount":         discountMenu,
 	"discountGroup":    discountGroupMenu,
 	"language":         languageMenu,
+	"legalForm":        legalFormMenu,
 }
 
 func menuSelectAndRun(title string, c *cli.Context, menu map[string]func(c *cli.Context) error) error {
