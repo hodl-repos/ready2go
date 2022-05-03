@@ -50,6 +50,11 @@ type CouponRequest struct {
 	CustomerID        *int           `json:"customer_id"`
 }
 
+type CouponUpdate struct {
+	Value *string `json:"value"`
+	Vat   *int    `json:"vat"`
+}
+
 func (as *CouponService) GetCoupons(ctx context.Context, page *Pagination) (*[]CouponResponse, error) {
 	responseData := make([]CouponResponse, 0)
 
@@ -105,6 +110,32 @@ func (as *CouponService) DeleteCoupon(ctx context.Context, id *int) (*MessageRes
 
 	u := fmt.Sprintf("coupons/%v", *id)
 	err := as.client.runHttpRequestWithContext(ctx, u, http.MethodDelete, nil, &responseData)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &responseData, nil
+}
+
+func (as *CouponService) Charge(ctx context.Context, id *int, data *CouponUpdate) (*MessageResponse, error) {
+	responseData := MessageResponse{}
+
+	u := fmt.Sprintf("coupons/%v/charge", *id)
+	err := as.client.runHttpRequestWithContext(ctx, u, http.MethodPost, data, &responseData)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &responseData, nil
+}
+
+func (as *CouponService) Redeem(ctx context.Context, id *int, data *CouponUpdate) (*MessageResponse, error) {
+	responseData := MessageResponse{}
+
+	u := fmt.Sprintf("coupons/%v/redeem", *id)
+	err := as.client.runHttpRequestWithContext(ctx, u, http.MethodPost, data, &responseData)
 
 	if err != nil {
 		return nil, err
