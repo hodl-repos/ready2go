@@ -11,28 +11,20 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-var couponCategoryMenus = map[string]func(c *cli.Context) error{
-	"get all":   runCouponCategoryGetAll,
-	"get by id": runCouponCategoryGetById,
+var currencyMenus = map[string]func(c *cli.Context) error{
+	"get all":   runCurrencyGetAll,
+	"get by id": runCurrencyGetById,
 }
 
-func couponCategoryMenu(c *cli.Context) error {
-	return menuSelectAndRun("select function to run:", c, couponCategoryMenus)
+func currencyMenu(c *cli.Context) error {
+	return menuSelectAndRun("select function to run:", c, currencyMenus)
 }
 
-func runCouponCategoryGetAll(c *cli.Context) error {
-	pagination, err := requestPaginationData()
-
-	if err != nil {
-		msg := fmt.Sprintf("error while requesting pagintion-data from user: %v", err.Error())
-		fmt.Println(msg)
-		return errors.New(msg)
-	}
-
+func runCurrencyGetAll(c *cli.Context) error {
 	accToken := config.AccountToken()
 	clt := r2o.NewClient(&accToken, nil)
 
-	data, err := clt.CouponCategory.GetCouponCategories(c.Context, pagination)
+	data, err := clt.Currency.GetCurrencies(c.Context)
 
 	if err != nil {
 		msg := fmt.Sprintf("error while loading from r2o API: %v", err.Error())
@@ -46,8 +38,8 @@ func runCouponCategoryGetAll(c *cli.Context) error {
 	return nil
 }
 
-func runCouponCategoryGetById(c *cli.Context) error {
-	couponId, err := getNumberPrompt("enter coupon-category-id")
+func runCurrencyGetById(c *cli.Context) error {
+	couponId, err := getNumberPrompt("enter currency-id")
 	if err != nil {
 		helper.CheckTerminalInterrupt(err)
 		return err
@@ -62,7 +54,7 @@ func runCouponCategoryGetById(c *cli.Context) error {
 	accToken := config.AccountToken()
 	clt := r2o.NewClient(&accToken, nil)
 
-	data, err := clt.CouponCategory.GetCouponCategory(c.Context, couponId)
+	data, err := clt.Currency.GetCurrency(c.Context, couponId)
 
 	if err != nil {
 		msg := fmt.Sprintf("error while loading from r2o API: %v", err.Error())
