@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-// CountryService handles communication with the issue related
+// CustomerService handles communication with the issue related
 // methods of the ready2order API.
 //
 // ready2order API docs: https://app.swaggerhub.com/apis-docs/ready2ordergmbh/ready2order-api-production/1.0.329#/
@@ -33,22 +33,22 @@ type CustomerResponse struct {
 }
 
 type CustomerRequest struct {
-	Birthday       string `json:"birthday"`
-	City           string `json:"city"`
-	Company        string `json:"company"`
-	CustomerName   string `json:"customer_name"`
-	CustomerNumber int64  `json:"customer_number"`
-	Email          string `json:"email"`
-	FirstName      string `json:"firstName"`
-	FkCouID        int64  `json:"fk_cou_id"`
-	LastName       string `json:"lastName"`
-	Notes          string `json:"notes"`
-	Phone          string `json:"phone"`
-	Salutation     string `json:"salutation"`
-	Street         string `json:"street"`
-	Title          string `json:"title"`
-	UID            string `json:"uid"`
-	Zip            string `json:"zip"`
+	Birthday       *string `json:"birthday"`
+	City           *string `json:"city"`
+	Company        *string `json:"company"`
+	CustomerName   *string `json:"customer_name"`
+	CustomerNumber *int    `json:"customer_number"`
+	Email          *string `json:"email"`
+	FirstName      *string `json:"firstName"`
+	FkCouID        *int    `json:"fk_cou_id"`
+	LastName       *string `json:"lastName"`
+	Notes          *string `json:"notes"`
+	Phone          *string `json:"phone"`
+	Salutation     *string `json:"salutation"`
+	Street         *string `json:"street"`
+	Title          *string `json:"title"`
+	UID            *string `json:"uid"`
+	Zip            *string `json:"zip"`
 }
 
 func (as *CustomerService) GetCustomers(ctx context.Context, page *Pagination) (*[]CustomerResponse, error) {
