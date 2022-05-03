@@ -17,13 +17,6 @@ type FileResponse struct {
 	Filename *string `json:"filename"`
 }
 
-type JobResponse struct {
-	JobStatusFinishedAt string `json:"jobStatus_finishedAt"`
-	JobStatusID         int64  `json:"jobStatus_id"`
-	JobStatusStartedAt  string `json:"jobStatus_startedAt"`
-	JobStatusStatus     string `json:"jobStatus_status"`
-}
-
 type CashbookExportFormat string
 
 const (
