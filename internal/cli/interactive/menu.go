@@ -7,10 +7,11 @@ import (
 )
 
 var menus = map[string]func(c *cli.Context) error{
-	"webhook":  webhookMenu,
-	"billType": billTypeMenu,
-	"country":  countryMenu,
-	"coupon":   couponMenu,
+	"webhook":        webhookMenu,
+	"billType":       billTypeMenu,
+	"country":        countryMenu,
+	"coupon":         couponMenu,
+	"couponCategory": couponCategoryMenu,
 }
 
 func menuSelectAndRun(title string, c *cli.Context, menu map[string]func(c *cli.Context) error) error {
