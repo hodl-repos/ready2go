@@ -56,6 +56,8 @@ type Client struct {
 	Table                   *TableService
 	TableArea               *TableAreaService
 	User                    *UserService
+	Tss                     *TssService
+	Access                  *AccessService
 }
 
 // NewClient returns a new Ready2Order API client. If a nil httpClient is
@@ -97,6 +99,8 @@ func NewClient(accountApiToken *string, httpClient *http.Client) *Client {
 	c.Table = (*TableService)(&c.common)
 	c.TableArea = (*TableAreaService)(&c.common)
 	c.User = (*UserService)(&c.common)
+	c.Tss = (*TssService)(&c.common)
+	c.Access = (*AccessService)(&c.common)
 
 	return c
 }
