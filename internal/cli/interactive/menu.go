@@ -27,6 +27,7 @@ var menus = map[string]func(c *cli.Context) error{
 	"printer":           printerMenu,
 	"productGroup":      productGroupMenu,
 	"storno":            stornoMenu,
+	"table":             tableMenu,
 }
 
 func menuSelectAndRun(title string, c *cli.Context, menu map[string]func(c *cli.Context) error) error {
