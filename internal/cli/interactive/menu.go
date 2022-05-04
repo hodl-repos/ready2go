@@ -23,6 +23,7 @@ var menus = map[string]func(c *cli.Context) error{
 	"paymentMethod":     paymentMethodMenu,
 	"paymentMethodType": paymentMethodTypeMenu,
 	"printJob":          printJobMenu,
+	"printLog":          printLogMenu,
 }
 
 func menuSelectAndRun(title string, c *cli.Context, menu map[string]func(c *cli.Context) error) error {
