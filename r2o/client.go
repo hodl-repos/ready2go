@@ -59,6 +59,7 @@ type Client struct {
 	Tss                     *TssService
 	Access                  *AccessService
 	DailyReport             *DailyReportService
+	Signup                  *SignupService
 }
 
 // NewClient returns a new Ready2Order API client. If a nil httpClient is
@@ -103,6 +104,7 @@ func NewClient(accountApiToken *string, httpClient *http.Client) *Client {
 	c.Tss = (*TssService)(&c.common)
 	c.Access = (*AccessService)(&c.common)
 	c.DailyReport = (*DailyReportService)(&c.common)
+	c.Signup = (*SignupService)(&c.common)
 
 	return c
 }
