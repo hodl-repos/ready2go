@@ -7,20 +7,21 @@ import (
 )
 
 var menus = map[string]func(c *cli.Context) error{
-	"webhook":          webhookMenu,
-	"billType":         billTypeMenu,
-	"country":          countryMenu,
-	"coupon":           couponMenu,
-	"couponCategory":   couponCategoryMenu,
-	"currency":         currencyMenu,
-	"customer":         customerMenu,
-	"customerCategory": customerCategoryMenu,
-	"discount":         discountMenu,
-	"discountGroup":    discountGroupMenu,
-	"language":         languageMenu,
-	"legalForm":        legalFormMenu,
-	"order":            orderMenu,
-	"paymentMethod":    paymentMethodMenu,
+	"webhook":           webhookMenu,
+	"billType":          billTypeMenu,
+	"country":           countryMenu,
+	"coupon":            couponMenu,
+	"couponCategory":    couponCategoryMenu,
+	"currency":          currencyMenu,
+	"customer":          customerMenu,
+	"customerCategory":  customerCategoryMenu,
+	"discount":          discountMenu,
+	"discountGroup":     discountGroupMenu,
+	"language":          languageMenu,
+	"legalForm":         legalFormMenu,
+	"order":             orderMenu,
+	"paymentMethod":     paymentMethodMenu,
+	"paymentMethodType": paymentMethodTypeMenu,
 }
 
 func menuSelectAndRun(title string, c *cli.Context, menu map[string]func(c *cli.Context) error) error {
