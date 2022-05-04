@@ -51,6 +51,7 @@ type Client struct {
 	PrintJob                *PrintJobService
 	PrintLog                *PrintLogService
 	Printer                 *PrinterService
+	ProductGroup            *ProductGroupService
 }
 
 // NewClient returns a new Ready2Order API client. If a nil httpClient is
@@ -87,6 +88,7 @@ func NewClient(accountApiToken *string, httpClient *http.Client) *Client {
 	c.PrintJob = (*PrintJobService)(&c.common)
 	c.PrintLog = (*PrintLogService)(&c.common)
 	c.Printer = (*PrinterService)(&c.common)
+	c.ProductGroup = (*ProductGroupService)(&c.common)
 
 	return c
 }
