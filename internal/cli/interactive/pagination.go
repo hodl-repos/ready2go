@@ -10,28 +10,28 @@ import (
 )
 
 func requestPaginationData() (*r2o.Pagination, error) {
-	var offset int
+	var page int
 	var limit int
 
 	for {
-		offsetString := ""
+		pageString := ""
 
 		prompt := &survey.Input{
-			Message: "enter pagination offset",
+			Message: "enter pagination page",
 		}
 
-		err := survey.AskOne(prompt, &offsetString)
+		err := survey.AskOne(prompt, &pageString)
 		if err != nil {
 			helper.CheckTerminalInterrupt(err)
 			return nil, err
 		}
 
-		val, err := strconv.ParseInt(offsetString, 10, 64)
+		val, err := strconv.ParseInt(pageString, 10, 64)
 
 		if err != nil {
 			fmt.Println("entered wrong type, number expected")
 		} else {
-			offset = int(val)
+			page = int(val)
 			break
 		}
 	}
@@ -60,7 +60,7 @@ func requestPaginationData() (*r2o.Pagination, error) {
 	}
 
 	return &r2o.Pagination{
-		Offset: &offset,
-		Limit:  &limit,
+		Page:  &page,
+		Limit: &limit,
 	}, nil
 }

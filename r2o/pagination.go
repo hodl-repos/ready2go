@@ -1,8 +1,8 @@
 package r2o
 
 type Pagination struct {
-	//Offset (Default: 0)
-	Offset *int `url:"offset"`
+	//Page (Default: 1)
+	Page *int `url:"page"`
 
 	//Items per page (Default: 25)
 	Limit *int `url:"limit"`
