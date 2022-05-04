@@ -19,8 +19,8 @@ type CustomerCategoryResponse struct {
 }
 
 type CustomerCategoryRequest struct {
-	CustomerCategoryDescription string `json:"customerCategory_description"`
-	CustomerCategoryName        string `json:"customerCategory_name"`
+	CustomerCategoryDescription *string `json:"customerCategory_description"`
+	CustomerCategoryName        *string `json:"customerCategory_name"`
 }
 
 func (as *CustomerCategoryService) GetCustomerCategories(ctx context.Context) (*[]CustomerCategoryResponse, error) {

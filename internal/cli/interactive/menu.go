@@ -20,6 +20,7 @@ var menus = map[string]func(c *cli.Context) error{
 	"language":         languageMenu,
 	"legalForm":        legalFormMenu,
 	"order":            orderMenu,
+	"paymentMethod":    paymentMethodMenu,
 }
 
 func menuSelectAndRun(title string, c *cli.Context, menu map[string]func(c *cli.Context) error) error {
